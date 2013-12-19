@@ -419,6 +419,20 @@ describe "Promotion Adjustments" do
       Spree::Order.last.total.to_f.should == 54.00
     end
 
+    it "should pick the best promotion when two promotions exist for the same product" do
+      create_per_product_promotion("RoR Mug", 5.0)
+      add_to_cart "RoR Mug"
+      Spree::Order.last.total.to_f.should == 35.00
+
+      create_per_product_promotion("RoR Mug", 10.0)
+      Spree::Activator.active.event_name_starts_with('spree.cart.add').size.should == 2
+
+      update_first_item_quantity 0
+      add_to_cart "RoR Mug"
+
+      Spree::Order.last.total.to_f.should == 30.00
+    end
+
     def add_to_cart product_name
       visit spree.root_path
       click_link product_name
