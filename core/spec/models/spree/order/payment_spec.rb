@@ -119,6 +119,32 @@ module Spree
       end
     end
 
+    context "#authorize_payments!" do
+      let(:payment) { stub_model(Spree::Payment) }
+      before { order.stub :pending_payments => [payment], :total => 10 }
+      subject { order.authorize_payments! }
+
+      it "processes payments with attempt_authorization!" do
+        expect(payment).to receive(:attempt_authorization!)
+        subject
+      end
+
+      it { should be_true }
+    end
+
+    context "#capture_payments!" do
+      let(:payment) { stub_model(Spree::Payment) }
+      before { order.stub :pending_payments => [payment], :total => 10 }
+      subject { order.capture_payments! }
+
+      it "processes payments with attempt_authorization!" do
+        expect(payment).to receive(:attempt_purchase!)
+        subject
+      end
+
+      it { should be_true }
+    end
+
     context "#outstanding_balance" do
       it "should return positive amount when payment_total is less than total" do
         order.payment_total = 20.20

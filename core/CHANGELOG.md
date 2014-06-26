@@ -84,3 +84,11 @@
 *   Increase the precision of the amount/price columns in order for support other currencies. See https://github.com/spree/spree/issues/4657
 
     Gonzalo Moreno
+
+*   Add attempt_authorization! and attempt_purchase! to the public interface of payments.
+
+    Richard Wilson
+
+*   Add authorize_payments! and capture_payments! to the public interface of orders.
+
+    Richard Wilson
