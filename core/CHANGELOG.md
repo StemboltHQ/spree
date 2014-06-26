@@ -88,3 +88,7 @@
 *   Add attempt_authorization! and attempt_purchase! to the public interface of payments.
 
     Richard Wilson
+
+*   Add authorize_payments! and capture_payments! to the public interface of orders.
+
+    Richard Wilson
